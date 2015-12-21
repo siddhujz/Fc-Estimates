@@ -1,0 +1,177 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="REVINTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Estimates">
+          <Key>
+            <PropertyRef Name="estimateId" />
+          </Key>
+          <Property Name="estimateId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="medicalProcedure" Type="nvarchar" MaxLength="100" />
+          <Property Name="minimumCost" Type="money" />
+          <Property Name="maximumCost" Type="money" />
+          <Property Name="department" Type="nvarchar" MaxLength="25" />
+          <Property Name="sourceOf" Type="nchar" MaxLength="100" />
+          <Property Name="notes" Type="nvarchar" MaxLength="200" />
+          <Property Name="dateAdded" Type="date" />
+          <Property Name="lastUpdated" Type="date" />
+          <Property Name="hospitalEstimate" Type="money" />
+          <Property Name="physicianEstimate" Type="money" />
+          <Property Name="cpt" Type="varchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="Roles">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="roleDescription" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="RolesUsers">
+          <Key>
+            <PropertyRef Name="roleId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="roleId" Type="int" Nullable="false" />
+          <Property Name="userId" Type="nvarchar" MaxLength="20" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Users">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="firstName" Type="nvarchar" MaxLength="20" />
+          <Property Name="lastName" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityContainer Name="REVINTModelStoreContainer">
+          <EntitySet Name="Estimates" EntityType="Self.Estimates" Schema="fc_estimates" store:Type="Tables" />
+          <EntitySet Name="Roles" EntityType="Self.Roles" Schema="fc_estimates" store:Type="Tables" />
+          <EntitySet Name="RolesUsers" EntityType="Self.RolesUsers" Schema="fc_estimates" store:Type="Tables" />
+          <EntitySet Name="Users" EntityType="Self.Users" Schema="fc_estimates" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="REVINTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Estimate">
+          <Key>
+            <PropertyRef Name="estimateId" />
+          </Key>
+          <Property Name="estimateId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="medicalProcedure" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="minimumCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="maximumCost" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="department" Type="String" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="sourceOf" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+          <Property Name="notes" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="dateAdded" Type="DateTime" Precision="0" />
+          <Property Name="lastUpdated" Type="DateTime" Precision="0" />
+          <Property Name="hospitalEstimate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="physicianEstimate" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="cpt" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Role">
+          <Key>
+            <PropertyRef Name="roleId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="roleDescription" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="RolesUser">
+          <Key>
+            <PropertyRef Name="roleId" />
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="roleId" Type="Int32" Nullable="false" />
+          <Property Name="userId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+        </EntityType>
+        <EntityType Name="User">
+          <Key>
+            <PropertyRef Name="userId" />
+          </Key>
+          <Property Name="userId" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="firstName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="lastName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="REVINTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Estimates" EntityType="Self.Estimate" />
+          <EntitySet Name="Roles" EntityType="Self.Role" />
+          <EntitySet Name="RolesUsers" EntityType="Self.RolesUser" />
+          <EntitySet Name="Users" EntityType="Self.User" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="REVINTModelStoreContainer" CdmEntityContainer="REVINTEntities">
+          <EntitySetMapping Name="Estimates">
+            <EntityTypeMapping TypeName="REVINTModel.Estimate">
+              <MappingFragment StoreEntitySet="Estimates">
+                <ScalarProperty Name="estimateId" ColumnName="estimateId" />
+                <ScalarProperty Name="medicalProcedure" ColumnName="medicalProcedure" />
+                <ScalarProperty Name="minimumCost" ColumnName="minimumCost" />
+                <ScalarProperty Name="maximumCost" ColumnName="maximumCost" />
+                <ScalarProperty Name="department" ColumnName="department" />
+                <ScalarProperty Name="sourceOf" ColumnName="sourceOf" />
+                <ScalarProperty Name="notes" ColumnName="notes" />
+                <ScalarProperty Name="dateAdded" ColumnName="dateAdded" />
+                <ScalarProperty Name="lastUpdated" ColumnName="lastUpdated" />
+                <ScalarProperty Name="hospitalEstimate" ColumnName="hospitalEstimate" />
+                <ScalarProperty Name="physicianEstimate" ColumnName="physicianEstimate" />
+                <ScalarProperty Name="cpt" ColumnName="cpt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Roles">
+            <EntityTypeMapping TypeName="REVINTModel.Role">
+              <MappingFragment StoreEntitySet="Roles">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="roleDescription" ColumnName="roleDescription" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RolesUsers">
+            <EntityTypeMapping TypeName="REVINTModel.RolesUser">
+              <MappingFragment StoreEntitySet="RolesUsers">
+                <ScalarProperty Name="roleId" ColumnName="roleId" />
+                <ScalarProperty Name="userId" ColumnName="userId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Users">
+            <EntityTypeMapping TypeName="REVINTModel.User">
+              <MappingFragment StoreEntitySet="Users">
+                <ScalarProperty Name="userId" ColumnName="userId" />
+                <ScalarProperty Name="firstName" ColumnName="firstName" />
+                <ScalarProperty Name="lastName" ColumnName="lastName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
